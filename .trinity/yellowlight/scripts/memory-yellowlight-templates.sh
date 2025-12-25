@@ -68,8 +68,14 @@ deploy_to_digitalocean() {
     _yl_log "🌊" "DIGITALOCEAN" "Deploying ${service} to ${environment}..."
     
     if command -v doctl &> /dev/null; then
-        # This is a placeholder - actual deployment depends on your setup
-        _yl_log "ℹ️" "DIGITALOCEAN" "Implement DigitalOcean deployment for your setup"
+        # This is a placeholder - customize based on your DigitalOcean setup
+        # Example options:
+        # - App Platform: doctl apps create-deployment <app-id>
+        # - Droplets: Use SSH to deploy via git pull or SCP
+        # - Kubernetes: kubectl apply -f manifests/
+        _yl_log "ℹ️" "DIGITALOCEAN" "Placeholder: Implement DigitalOcean deployment for your specific infrastructure"
+        _yl_log "ℹ️" "DIGITALOCEAN" "Options: App Platform, Droplets, or Kubernetes"
+        return 1
     else
         _yl_log "⚠️" "DIGITALOCEAN" "doctl CLI not installed. Install from: https://docs.digitalocean.com/reference/doctl/"
         return 1
