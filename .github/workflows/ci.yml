@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest pytest-cov flake8
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Lint with flake8
+        run: |
+          flake8 src/ tests/ \
+            --max-line-length=120 \
+            --extend-ignore=E203,W503,E501 \
+            --count --statistics
+
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --tb=short \
+            --cov=src \
+            --cov-report=term-missing
+
+      - name: Security scan
+        run: |
+          pip install bandit
+          bandit -r src/ -ll --quiet || true
