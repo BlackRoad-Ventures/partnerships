@@ -1,0 +1,9 @@
+# BlackRoad Ventures — Partnerships
+# Core dependencies (stdlib only for production — no external packages needed)
+# The Stripe integration uses urllib (stdlib) directly, no stripe SDK required.
+#
+# Test dependencies:
+pytest>=7.0
+pytest-cov>=4.0
+flake8>=6.0
+bandit>=1.7
